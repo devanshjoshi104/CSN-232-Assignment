@@ -1,0 +1,44 @@
+CSN-232
+Operating System Assignment
+Starve-Free Readers Writers Problem 
+The readers-writers problem is a normal day problem like a file that is shared between multiple processes. Some of these processes are reading data from files and some of the processes are writing into the object. But, if two writers or a reader and writer access the object at the same time, there may be problems as the other one may/may not not get updated data. So there comes a synchronization problem.
+The readers-writers problem is used to manage synchronization so that there are no problems with the data. To solve this situation, a writer should get exclusive access to an object, no reader or writer may access it. But whereas, multiple readers can access the object at the same time.
+In order to make the synchronization starve-free, we will implement FCFS as it will remove starvation due to no priority given and we will make a Queue (initialized as 1 in starting)  semaphore which will keep the track of the order in which the processes are coming and store information. 
+Semaphore which need to be defined – 
+1. controlResource – to control access of reader and writer to the resource.
+2. queue – It will serve as a queue to track orders  for processes. 
+3. readerMutex – to synchronize the value of the current number of readers.
+
+
+Readers will run after Writer because they read semaphore.
+
+//
+Pseudo Code for Writers  
+Writers will first wait for their turn, then they ask for a request to access data and then give turn to other process in queue, then it will write the data and then release the modification request .  
+while(true){ 
+wait(queue); 
+wait(controlResource); 
+signal(queue); 
+Write(); 
+signal(controlResource); 
+} 
+
+
+//
+Pseudo Code for Readers 
+ Multiple readers can access data at a time so we need to make a counter for the number of readers  and a semaphore (readerMutex) for synchronizing the value  of this count variable. It will be like whoever request reading access first,request resource access for readers and the one last will release.
+int readersCount;
+while(true){ 
+wait(queue); 
+wait(readerMutex); 
+if(readersCount==0) 
+{wait(controlResource); }
+readersCount++; 
+signal(order); 
+signal(readerMutex); 
+read();
+wait(readerMutex); 
+readersCount; 
+if(readersCount==0){signal(controlResource); }
+signal(readerMutex); 
+} 
