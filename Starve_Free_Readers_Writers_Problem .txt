@@ -38,7 +38,7 @@ signal(queue);
 signal(readerMutex); 
 read();
 wait(readerMutex); 
-readersCount; 
+readersCount--; 
 if(readersCount==0){signal(controlResource); }
 signal(readerMutex); 
 } 
