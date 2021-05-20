@@ -27,7 +27,7 @@ signal(controlResource);
 //
 Pseudo Code for Readers 
  Multiple readers can access data at a time so we need to make a counter for the number of readers  and a semaphore (readerMutex) for synchronizing the value  of this count variable. It will be like whoever request reading access first,request resource access for readers and the one last will release.
-int readersCount;
+int readersCount=0;
 while(true){ 
 wait(queue); 
 wait(readerMutex); 
